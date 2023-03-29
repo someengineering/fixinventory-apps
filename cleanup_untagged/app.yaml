@@ -1,0 +1,71 @@
+name: cleanup_untagged
+description: "This app deletes cloud resources that are missing mandatory tags after a certain amount of time has passed since their creation."
+version: "1.0.0"
+language: jinja2
+license: "Apache 2.0"
+authors: ["someengineering"]
+url: "https://resoto.com/"
+categories: ["cleanup"]
+default_config:
+  default:
+    age: '2h'
+  tags:
+    - 'owner'
+    - 'expiration'
+  kinds:
+    - 'aws_ec2_instance'
+    - 'aws_ec2_volume'
+    - 'aws_vpc'
+    - 'aws_cloudformation_stack'
+    - 'aws_elb'
+    - 'aws_alb'
+    - 'aws_alb_target_group'
+    - 'aws_eks_cluster'
+    - 'aws_eks_nodegroup'
+    - 'example_instance'
+    - 'example_network'
+  accounts:
+    aws:
+      '068564737731':
+        name: 'playground'
+        age: '7d'
+      '575584959047':
+        name: 'eng-sre'
+config_schema:
+  $schema: "http://json-schema.org/draft-07/schema#"
+  title: "Resoto Cleanup Untagged Config Schema"
+  description: "Config Schema for cleanup_untagged"
+  type: "object"
+  properties:
+    default:
+      type: "object"
+      properties:
+        age:
+          type: "string"
+          pattern: "^[0-9]+(s|m|h|d)$"
+    tags:
+      type: "array"
+      items:
+        type: "string"
+    kinds:
+      type: "array"
+      items:
+        type: "string"
+    accounts:
+      type: "object"
+      additionalProperties:
+        type: "object"
+        additionalProperties:
+          type: "object"
+          properties:
+            name:
+              type: "string"
+            age:
+              type: "string"
+              pattern: "^[0-9]+(s|m|h|d)$"
+  required:
+    - "default"
+    - "tags"
+    - "kinds"
+    - "accounts"
+args_schema:

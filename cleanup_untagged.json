@@ -1,0 +1,104 @@
+{
+    "name": "cleanup_untagged",
+    "description": "This app deletes cloud resources that are missing mandatory tags after a certain amount of time has passed since their creation.",
+    "version": "1.0.0",
+    "language": "jinja2",
+    "license": "Apache 2.0",
+    "authors": [
+        "someengineering"
+    ],
+    "url": "https://resoto.com/",
+    "categories": [
+        "cleanup"
+    ],
+    "default_config": {
+        "default": {
+            "age": "2h"
+        },
+        "tags": [
+            "owner",
+            "expiration"
+        ],
+        "kinds": [
+            "aws_ec2_instance",
+            "aws_ec2_volume",
+            "aws_vpc",
+            "aws_cloudformation_stack",
+            "aws_elb",
+            "aws_alb",
+            "aws_alb_target_group",
+            "aws_eks_cluster",
+            "aws_eks_nodegroup",
+            "example_instance",
+            "example_network"
+        ],
+        "accounts": {
+            "aws": {
+                "068564737731": {
+                    "name": "playground",
+                    "age": "7d"
+                },
+                "575584959047": {
+                    "name": "eng-sre"
+                }
+            }
+        }
+    },
+    "config_schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Resoto Cleanup Untagged Config Schema",
+        "description": "Config Schema for cleanup_untagged",
+        "type": "object",
+        "properties": {
+            "default": {
+                "type": "object",
+                "properties": {
+                    "age": {
+                        "type": "string",
+                        "pattern": "^[0-9]+(s|m|h|d)$"
+                    }
+                }
+            },
+            "tags": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "kinds": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "accounts": {
+                "type": "object",
+                "additionalProperties": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "age": {
+                                "type": "string",
+                                "pattern": "^[0-9]+(s|m|h|d)$"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "required": [
+            "default",
+            "tags",
+            "kinds",
+            "accounts"
+        ]
+    },
+    "args_schema": null,
+    "readme": "# cleanup-untagged - Resoto Infrastructure App\nCleanup Untagged App for Resoto\n\nThis app deletes cloud resources that are missing mandatory tags after a certain amount of time has passed since their creation.\n\n## Usage\n\nIn `resh` execute\n\n```\n> config edit resoto.apps.cleanup_untagged\n```\n\n```\ndefault:\n  age: '2h'\ntags:\n  - 'owner'\n  - 'expiration'\nkinds:\n  - 'aws_ec2_instance'\n  - 'aws_ec2_volume'\n  - 'aws_vpc'\n  - 'aws_cloudformation_stack'\n  - 'aws_elb'\n  - 'aws_alb'\n  - 'aws_alb_target_group'\n  - 'aws_eks_cluster'\n  - 'aws_eks_nodegroup'\n  - 'example_instance'\n  - 'example_network'\naccounts:\n  aws:\n    068564737731:\n      name: 'playground'\n      age: '7d'\n    '575584959047':\n      name: 'eng-sre'\n  example:\n    Example Account:\n      name: 'Example Account'\n```\n\n### Config format\n\nThe config section consists of four sub-sections. `default`, `tags`, `classes` and `accounts`. The `default` section specifies the default `age` a resource must have before we enforce mandatory tags on it. For instance if `age` is set to `2h` this means that whatever mechanism creates a resource has two hours to add those mandatory tags.\n\nThe `tags` section is a list of tag names that MUST exist on every resource class specified in `classes`. The `classes` section is a list of resource class names for which tags specified in the `tags` list must exist.\n\nThe `accounts` section contains a dictionary with cloud IDs as keys (e.g. `aws`) and account IDs for which tags will be enforced as values (e.g. `068564737731`). Those in turn contain a `name` and optionally an `age` override.\n\nThe following age units are valid:\n\n```\nweeks\ndays\nhours\nminutes\n```\n\nEach of them can be abbreviated down to one letter. E.g. `7d`, `24h`, `60m`, etc. A space in between the numeric and the unit is optional, meaning `7d` and `7 days` are equivalent.\n",
+    "icon": "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGNsYXNzPSJpY29uIGljb24tdGFibGVyIGljb24tdGFibGVyLWJhdCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgPHBhdGggc3Ryb2tlPSJub25lIiBkPSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIi8+CiAgPHBhdGggZD0iTTE3IDE2Yy43NCAtMi4yODYgMi43NzggLTMuNzYyIDUgLTNjLS4xNzMgLTIuNTk1IC4xMyAtNS4zMTQgLTIgLTcuNWMtMS43MDggMi42NDggLTMuMzU4IDIuNTU3IC01IDIuNXYtNGwtMyAybC0zIC0ydjRjLTEuNjQyIC4wNTcgLTMuMjkyIC4xNDggLTUgLTIuNWMtMi4xMyAyLjE4NiAtMS44MjcgNC45MDUgLTIgNy41YzIuMjIyIC0uNzYyIDQuMjYgLjcxNCA1IDNjMi41OTMgMCAzLjg4OSAuOTUyIDUgNGMxLjExMSAtMy4wNDggMi40MDcgLTQgNSAtNHoiIC8+CiAgPHBhdGggZD0iTTkgOGEzIDMgMCAwIDAgNiAwIiAvPgo8L3N2Zz4KCgo=",
+    "source": "{%- set tags_part = 'not(has_key(tags, [\"' + '\", \"'.join(config[\"tags\"]) + '\"]))' %}\n{%- set kinds_part = 'is([\"' + '\", \"'.join(config[\"kinds\"]) + '\"])' %}\n{%- set account_parts = [] %}\n{%- set default_age = config[\"default\"][\"age\"]|default(\"2h\") %}\n{%- for cloud_id, account in config[\"accounts\"].items() %}\n    {%- for account_id, account_data in account.items() %}\n        {%- set age = account_data.get(\"age\", default_age) %}\n        {%- set account_part = '(/ancestors.cloud.id == \"' ~ cloud_id ~ '\" and /ancestors.account.id == \"' ~ account_id ~ '\" and age > ' ~ age ~ ')' %}\n        {%- do account_parts.append(account_part) %}\n    {%- endfor %}\n{%- endfor %}\n{%- set accounts_part = \"(\" + \" or \".join(account_parts) + \")\" %}\n{%- set exclusion_part = \"/metadata.protected == false and /metadata.phantom == false and /metadata.cleaned == false\" %}\n{%- set required_tags = \", \".join(config[\"tags\"]) %}\n{%- set reason = \"Missing one or more of required tags \" ~ required_tags ~ \" and age more than threshold\" %}\n{%- set cleanup_search = 'search ' ~ exclusion_part ~ ' and ' ~ kinds_part ~ ' and ' ~ tags_part ~ ' and ' ~ accounts_part ~ ' | clean \"' ~ reason ~ '\"' %}\n{{ cleanup_search }}\n"
+}
