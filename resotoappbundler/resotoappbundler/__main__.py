@@ -28,7 +28,7 @@ def main() -> None:
     source = app_source.read_text()
     manifest = yaml.load(app_manifest.read_text(), Loader=yaml.FullLoader)
     readme = app_readme.read_text()
-    icon = base64.b64encode(app_icon.read_bytes()).decode("utf-8")
+    icon = "data:image/svg+xml;base64," + base64.b64encode(app_icon.read_bytes()).decode("utf-8")
 
     manifest["readme"] = readme
     manifest["icon"] = icon
