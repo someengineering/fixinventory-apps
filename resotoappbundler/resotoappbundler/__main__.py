@@ -2,6 +2,7 @@ import sys
 import yaml
 import json
 import base64
+import hashlib
 from pathlib import Path
 from resotolib.logger import log, setup_logger, add_args as logging_add_args
 from resotolib.args import ArgumentParser
@@ -32,6 +33,7 @@ def main() -> None:
 
     manifest["readme"] = readme
     manifest["icon"] = icon
+    manifest["source_hash"] = "sha256:" + hashlib.sha256(source.encode("utf-8")).hexdigest()
     manifest["source"] = source
 
     print(json.dumps(manifest, indent=4))

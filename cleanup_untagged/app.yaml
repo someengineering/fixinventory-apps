@@ -32,40 +32,27 @@ default_config:
       '575584959047':
         name: 'eng-sre'
 config_schema:
-  $schema: "http://json-schema.org/draft-07/schema#"
-  title: "Resoto Cleanup Untagged Config Schema"
-  description: "Config Schema for cleanup_untagged"
-  type: "object"
-  properties:
-    default:
-      type: "object"
-      properties:
-        age:
-          type: "string"
-          pattern: "^[0-9]+(s|m|h|d)$"
-    tags:
-      type: "array"
-      items:
-        type: "string"
-    kinds:
-      type: "array"
-      items:
-        type: "string"
-    accounts:
-      type: "object"
-      additionalProperties:
-        type: "object"
-        additionalProperties:
-          type: "object"
-          properties:
-            name:
-              type: "string"
-            age:
-              type: "string"
-              pattern: "^[0-9]+(s|m|h|d)$"
-  required:
-    - "default"
-    - "tags"
-    - "kinds"
-    - "accounts"
+  - fqn: cleanup_untagged
+    bases: []
+    properties:
+    - name: default
+      kind: dictionary[string, string]
+      required: false
+      description: Default age after which tags must exist.
+    - name: tags
+      kind: string[]
+      required: false
+      description: List of mandatory tags.
+    - name: kinds
+      kind: string[]
+      required: false
+      description: Kinds that should be checked for tags.
+    - name: accounts
+      kind: dictionary[string, dictionary[string, dictionary[string, string]]]
+      required: false
+      description: Accounts to run the app on.
+    allow_unknown_props: false
+    successor_kinds: null
+    aggregate_root: true
+    metadata: null
 args_schema:
