@@ -1,12 +1,10 @@
 import sys
-import yaml
 import json
-import base64
-import hashlib
 from pathlib import Path
 from resotolib.logger import log, setup_logger, add_args as logging_add_args
 from resotolib.args import ArgumentParser
-from .app import add_args as app_add_args
+from .app import app_manifest, app_dry_run, add_args as app_add_args
+
 
 def main() -> None:
     setup_logger("resotoappbundler")
@@ -17,29 +15,30 @@ def main() -> None:
     arg_parser.parse_args()
 
     app_path = Path(arg_parser.args.app_path)
-    app_manifest = app_path / "app.yaml"
-    app_readme = app_path / "README.md"
-    app_source = app_path / "app.jinja2"
-    app_icon = app_path / "app.svg"
-    for file in [app_manifest, app_readme, app_source, app_icon]:
-        if not file.exists():
-            log.error(f"Path {file} does not exist")
-            sys.exit(1)
+    if not app_path.is_dir():
+        log.error(f"Path {app_path} is not a directory")
+        sys.exit(1)
 
-    source = app_source.read_text()
-    manifest = yaml.load(app_manifest.read_text(), Loader=yaml.FullLoader)
-    readme = app_readme.read_text()
-    icon = "data:image/svg+xml;base64," + base64.b64encode(app_icon.read_bytes()).decode("utf-8")
+    if arg_parser.args.discover:
+        manifests = []
+        for path in app_path.iterdir():
+            if path.is_dir():
+                try:
+                    manifest = app_manifest(path)
+                except Exception as e:
+                    log.error(f"Failed to process {path}: {e}")
+                    continue
+                manifests.append(manifest)
+        print(json.dumps(manifests))
+        sys.exit(0)
 
-    manifest["readme"] = readme
-    manifest["icon"] = icon
-    manifest["source_hash"] = "sha256:" + hashlib.sha256(source.encode("utf-8")).hexdigest()
-    manifest["source"] = source
-
-    print(json.dumps(manifest, indent=4))
+    manifest = app_manifest(app_path)
+    if arg_parser.args.dry_run:
+        app_dry_run(manifest)
+    else:
+        print(json.dumps(manifest))
 
     sys.exit(0)
-
 
 
 if __name__ == "__main__":
