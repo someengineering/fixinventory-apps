@@ -1,4 +1,4 @@
-name: cleanup_untagged
+name: cleanup-untagged
 description: "This app deletes cloud resources that are missing mandatory tags after a certain amount of time has passed since their creation."
 version: "1.0.0"
 language: jinja2
