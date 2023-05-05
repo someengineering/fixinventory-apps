@@ -7,7 +7,7 @@ authors: ["someengineering"]
 url: "https://resoto.com/"
 categories: ["cleanup"]
 default_config:
-  cloud_and_accounts:
+  clouds_and_accounts:
     aws:
       - '1234567'
       - '567890'

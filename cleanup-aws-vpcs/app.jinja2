@@ -1,0 +1,5 @@
+{%- for cloud, accounts in config["clouds_and_accounts"].items() %}
+    {%- for account in accounts %}
+search is(aws_vpc) and /desired.clean == true and /ancestors.account.reported.id == "{{account}}" and /ancestors.cloud.reported.id == "{{cloud}}" --> is(aws_vpc_endpoint,aws_vpc_peering_connection,aws_ec2_network_acl,aws_ec2_subnet,aws_ec2_route_table,aws_ec2_security_group,aws_ec2_internet_gateway,aws_ec2_nat_gateway,aws_elb,aws_alb,aws_alb_target_group) | clean "Removing because parent VPC is marked for cleanup"
+    {%- endfor %}
+{%- endfor %}
