@@ -1,0 +1,18 @@
+name: cleanup-volumes
+description: "This app cleans up unused storage volumes that have reached a certain age threshold."
+version: "1.0.0"
+language: jinja2
+license: "Apache 2.0"
+authors: ["someengineering"]
+url: "https://resoto.com/"
+categories: ["cleanup"]
+default_config:
+config_schema:
+  - fqn: cleanup_volumes
+    bases: []
+    properties:
+    - name: min_age
+      kind: string
+      required: true
+      description: Minimum age of unused volumes to cleanup.
+args_schema:

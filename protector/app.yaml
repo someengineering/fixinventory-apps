@@ -1,0 +1,32 @@
+name: protector
+description: "This app protects important resources from deletion by Resoto."
+version: "1.0.0"
+language: jinja2
+license: "Apache 2.0"
+authors: ["someengineering"]
+url: "https://resoto.com/"
+categories: ["protection"]
+default_config:
+  resources:
+    aws:
+      '110465657741':
+        us-east-1:
+          aws_ec2_instance:
+            - 'i-0fcbe8974615bfd37'
+      '56789012345':
+        us-west-2:
+          aws_ec2_volume:
+            - 'vol-fcbe8974615b'
+config_schema:
+  - fqn: protector
+    bases: []
+    properties:
+    - name: resources
+      kind: dictionary[string, dictionary[string, dictionary[string, dictionary[string, string[]]]]]
+      required: false
+      description: Resources to protect.
+    allow_unknown_props: false
+    successor_kinds: null
+    aggregate_root: true
+    metadata: null
+args_schema:

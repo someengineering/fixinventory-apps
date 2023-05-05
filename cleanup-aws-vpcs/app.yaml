@@ -1,0 +1,22 @@
+name: cleanup-aws-vpcs
+description: "Find VPCs marked for cleanup and marks all dependencies for cleanup as well."
+version: "1.0.0"
+language: jinja2
+license: "Apache 2.0"
+authors: ["someengineering"]
+url: "https://resoto.com/"
+categories: ["cleanup"]
+default_config:
+  cloud_and_accounts:
+    aws:
+      - '1234567'
+      - '567890'
+config_schema:
+  - fqn: cleanup_aws_vpcs
+    bases: []
+    properties:
+    - name: clouds_and_accounts
+      kind: dictionary[string, string[]]
+      required: false
+      description: Default age after which tags must exist.
+args_schema:

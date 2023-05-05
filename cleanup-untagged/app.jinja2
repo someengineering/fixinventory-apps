@@ -5,7 +5,7 @@
 {%- for cloud_id, account in config["accounts"].items() %}
     {%- for account_id, account_data in account.items() %}
         {%- set age = account_data.get("age", default_age) %}
-        {%- set account_part = '(/ancestors.cloud.id == "' ~ cloud_id ~ '" and /ancestors.account.id == "' ~ account_id ~ '" and age > ' ~ age ~ ')' %}
+        {%- set account_part = '(/ancestors.cloud.reported.id == "' ~ cloud_id ~ '" and /ancestors.account.reported.id == "' ~ account_id ~ '" and age > ' ~ age ~ ')' %}
         {%- do account_parts.append(account_part) %}
     {%- endfor %}
 {%- endfor %}

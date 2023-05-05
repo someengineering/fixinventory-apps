@@ -1,0 +1,19 @@
+name: cleanup-aws-loadbalancers
+description: "This app cleans up AWS ALB/ELB load balancers with no instances attached to them."
+version: "1.0.0"
+language: jinja2
+license: "Apache 2.0"
+authors: ["someengineering"]
+url: "https://resoto.com/"
+categories: ["cleanup"]
+default_config:
+  min_age: '7d'
+config_schema:
+  - fqn: cleanup_aws_loadbalancers
+    bases: []
+    properties:
+    - name: min_age
+      kind: string
+      required: true
+      description: Age a load balancer must have before being considered for cleanup.
+args_schema:

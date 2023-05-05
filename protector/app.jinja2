@@ -1,0 +1,11 @@
+{%- for cloud, accounts in config["resources"].items() %}
+    {%- for account, regions in accounts.items() %}
+        {%- for region, kinds in regions.items() %}
+            {%- for kind, resources in kinds.items() %}
+                {%- for resource in resources %}
+search is({{ kind }}) and id == "{{ resource }}" and /ancestors.region.reported.id == "{{ region }}" and /ancestors.account.reported.id == "{{ account }}" and /ancestors.cloud.reported.id == "{{ cloud }}" | protect
+                {%- endfor %}
+            {%- endfor %}
+        {%- endfor %}
+    {%- endfor %}
+{%- endfor %}

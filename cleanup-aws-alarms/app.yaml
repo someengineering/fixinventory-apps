@@ -1,0 +1,26 @@
+name: cleanup-aws-alarms
+description: "This plugin marks all orphaned AWS CloudWatch Instance Alarms for cleanup."
+version: "1.0.0"
+language: jinja2
+license: "Apache 2.0"
+authors: ["someengineering"]
+url: "https://resoto.com/"
+categories: ["cleanup"]
+default_config:
+  clouds_and_accounts:
+    aws:
+      - '1234567'
+      - '567890'
+config_schema:
+  - fqn: cleanup_aws_alarms
+    bases: []
+    properties:
+    - name: clouds_and_accounts
+      kind: dictionary[string, string[]]
+      required: false
+      description: Clouds and accounts to cleanup AWS alarms in.
+    allow_unknown_props: false
+    successor_kinds: null
+    aggregate_root: true
+    metadata: null
+args_schema:

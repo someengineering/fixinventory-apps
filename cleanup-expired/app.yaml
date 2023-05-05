@@ -1,0 +1,11 @@
+name: cleanup-expired
+description: "This app cleans up resources that have expired."
+version: "1.0.0"
+language: jinja2
+license: "Apache 2.0"
+authors: ["someengineering"]
+url: "https://resoto.com/"
+categories: ["cleanup"]
+default_config:
+config_schema:
+args_schema:

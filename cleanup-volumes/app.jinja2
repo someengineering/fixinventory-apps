@@ -1,0 +1,1 @@
+search is(volume) and volume_status == available and age > {{ config['min_age'] }} and last_access > {{ config['min_age'] }} | clean "Volume is not in use and had not I/O for more than {{ config['min_age'] }}"
