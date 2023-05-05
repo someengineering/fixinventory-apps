@@ -6,6 +6,7 @@ from pathlib import Path
 from jinja2 import Environment
 from resotolib.logger import log
 from resotolib.args import ArgumentParser
+from resotolib.durations import parse_duration
 from typing import Dict, List, Union
 
 
@@ -75,7 +76,7 @@ def app_manifest(app_path: Path) -> Dict[str, Union[str, List, Dict]]:
 def app_dry_run(manifest: Dict, config_path: str = None) -> None:
     env = Environment(extensions=["jinja2.ext.do", "jinja2.ext.loopcontrols"])
     template = env.from_string(manifest["source"])
-    # template.globals["search"] = cg.search
+    template.globals["parse_duration"] = parse_duration
     if config_path is not None:
         config_path = Path(config_path)
         if not config_path.exists():
