@@ -13,9 +13,9 @@ This command discovers all apps in the current directory and writes the index to
 ## Usage of the `app` command in Resoto
 
 ```bash
-apps search [pattern] [--url https://cdn.some.engineering/resoto/apps/index.json]
-app info <app_name> [--url https://cdn.some.engineering/resoto/apps/index.json]
-app install <app_name> [--url https://cdn.some.engineering/resoto/apps/index.json]
+apps search [pattern] [--index-url https://cdn.some.engineering/resoto/apps/index.json]
+app info <app_name> [--index-url https://cdn.some.engineering/resoto/apps/index.json]
+app install <app_name> [--index-url https://cdn.some.engineering/resoto/apps/index.json]
 app edit <app_name>
 app uninstall <app_name>
 app update <app_name>|all
