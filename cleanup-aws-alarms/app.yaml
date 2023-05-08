@@ -7,10 +7,11 @@ authors: ["someengineering"]
 url: "https://resoto.com/"
 categories: ["cleanup"]
 default_config:
-  clouds_and_accounts:
-    aws:
-      - '1234567'
-      - '567890'
+  cleanup_aws_alarms:
+    clouds_and_accounts:
+      aws:
+        - '1234567'
+        - '567890'
 config_schema:
   - fqn: cleanup_aws_alarms
     bases: []

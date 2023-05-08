@@ -1,3 +1,4 @@
+{%- set config = config["tagvalidator"] %}
 {%- set default_expiration = config["default"]["expiration"]|default("24h") %}
 {%- set kinds_part = 'is(["' + '", "'.join(config["kinds"]) + '"])' %}
 {%- for cloud_id, account in config["accounts"].items() %}

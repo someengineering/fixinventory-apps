@@ -1,3 +1,4 @@
+{%- set config = config["cleanup_aws_loadbalancers"] %}
 {%- set min_age = config["min_age"]|default("7d") %}
 search is(aws_elb) and age > "{{ min_age }}" and backends == [] with (empty, --> is(aws_ec2_instance)) | clean "Load Balancer is older than {{ min_age }} and has no backends"
 search is(aws_alb_target_group) and age > "{{ min_age }}" and target_type == instance with (empty, --> is(aws_ec2_instance)) | clean "Load Balancer Target Group is older than {{ min_age }} and has no backends"

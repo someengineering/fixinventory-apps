@@ -1,3 +1,4 @@
+{%- set config = config["cleanup_untagged"] %}
 {%- set tags_part = 'not(has_key(tags, ["' + '", "'.join(config["tags"]) + '"]))' %}
 {%- set kinds_part = 'is(["' + '", "'.join(config["kinds"]) + '"])' %}
 {%- set account_parts = [] %}

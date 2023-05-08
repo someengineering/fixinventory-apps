@@ -1,3 +1,4 @@
+{%- set config = config["cleanup_aws_alarms"] %}
 {%- for cloud, accounts in config["clouds_and_accounts"].items() %}
     {%- for account in accounts %}
 search is(aws_cloudwatch_alarm) and /ancestors.account.reported.id == "{{account}}" and /ancestors.cloud.reported.id == "{{cloud}}" and cloudwatch_dimensions[*].name = InstanceId with (empty, <-- is(aws_ec2_instance)) | clean "Abandoned CloudWatch Instance Alarm"

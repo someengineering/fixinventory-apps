@@ -7,25 +7,26 @@ authors: ["someengineering"]
 url: "https://resoto.com/"
 categories: ["tagging"]
 default_config:
-  default:
-    expiration: '24h'
-  kinds:
-    - 'aws_ec2_instance'
-    - 'aws_vpc'
-    - 'aws_cloudformation_stack'
-    - 'aws_elb'
-    - 'aws_alb'
-    - 'aws_alb_target_group'
-    - 'aws_eks_cluster'
-    - 'aws_eks_nodegroup'
-    - 'aws_ec2_nat_gateway'
-  accounts:
-    aws:
-      '139475575661':
-        name: 'eng-production'
-      '123415487488':
-        name: 'sales-hosted-lead-gen'
-        expiration: '8d'
+  tagvalidator:
+    default:
+      expiration: '24h'
+    kinds:
+      - 'aws_ec2_instance'
+      - 'aws_vpc'
+      - 'aws_cloudformation_stack'
+      - 'aws_elb'
+      - 'aws_alb'
+      - 'aws_alb_target_group'
+      - 'aws_eks_cluster'
+      - 'aws_eks_nodegroup'
+      - 'aws_ec2_nat_gateway'
+    accounts:
+      aws:
+        '139475575661':
+          name: 'eng-production'
+        '123415487488':
+          name: 'sales-hosted-lead-gen'
+          expiration: '8d'
 config_schema:
   - fqn: tagvalidator
     bases: []
@@ -33,7 +34,7 @@ config_schema:
     - name: default
       kind: dictionary[string, string]
       required: false
-      description: List of kinds to validate expiration tags on.
+      description: Default expiration if not otherwise specified.
     - name: kinds
       kind: string[]
       required: false

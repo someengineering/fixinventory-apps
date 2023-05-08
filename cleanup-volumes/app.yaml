@@ -7,6 +7,8 @@ authors: ["someengineering"]
 url: "https://resoto.com/"
 categories: ["cleanup"]
 default_config:
+  cleanup_volumes:
+    min_age: '30d'
 config_schema:
   - fqn: cleanup_volumes
     bases: []

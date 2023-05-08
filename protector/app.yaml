@@ -7,16 +7,17 @@ authors: ["someengineering"]
 url: "https://resoto.com/"
 categories: ["protection"]
 default_config:
-  resources:
-    aws:
-      '110465657741':
-        us-east-1:
-          aws_ec2_instance:
-            - 'i-0fcbe8974615bfd37'
-      '56789012345':
-        us-west-2:
-          aws_ec2_volume:
-            - 'vol-fcbe8974615b'
+  protector:
+    resources:
+      aws:
+        '110465657741':
+          us-east-1:
+            aws_ec2_instance:
+              - 'i-0fcbe8974615bfd37'
+        '56789012345':
+          us-west-2:
+            aws_ec2_volume:
+              - 'vol-fcbe8974615b'
 config_schema:
   - fqn: protector
     bases: []
