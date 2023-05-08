@@ -12,11 +12,17 @@
             {%- set reported_id = reported.get("id") %}
             {%- set reported_name = reported.get("name") %}
             {%- set reported_kind = reported.get("kind", {}) %}
+            {%- if reported_id == reported_name %}
+                {%- set reported_dname = reported_id %}
+            {%- else %}
+                {%- set reported_dname = reported_name ~ ' (' ~ reported_id ~ ')' %}
+            {%- endif %}
+            {%- set kdname = reported_kind ~ ' ' ~ reported_dname %}
             {%- set resource_expiration = reported.get("tags", {}).get("expiration") %}
             {%- set resource_expiration_td = parse_duration(resource_expiration) %}
             {%- set resource_id = resource.get("id") %}
             {%- if resource_expiration_td is none or resource_expiration_td > account_expiration_td %}
-echo "Updating expiration tag for {{ resource_id }} from {{ resource_expiration }} to {{ account_expiration }}"
+echo "Updating expiration tag for {{ kdname }} from {{ resource_expiration }} to {{ account_expiration }}"
 search id({{ resource_id }}) | tag update expiration "{{ account_expiration }}"
             {%- endif %}
         {%- endfor %}
