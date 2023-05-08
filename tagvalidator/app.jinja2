@@ -1,0 +1,24 @@
+{%- set default_expiration = config["default"]["expiration"]|default("24h") %}
+{%- set kinds_part = 'is(["' + '", "'.join(config["kinds"]) + '"])' %}
+{%- for cloud_id, account in config["accounts"].items() %}
+    {%- for account_id, account_data in account.items() %}
+        {%- set account_expiration = account_data.get("expiration", default_expiration) %}
+        {%- set account_expiration_td = parse_duration(account_expiration) %}
+        {%- if account_expiration_td is none %}{% continue %}{% endif %}
+        {%- set account_part = '/ancestors.cloud.reported.id == "' ~ cloud_id ~ '" and /ancestors.account.reported.id == "' ~ account_id ~ '"' %}
+        {%- set resource_search = 'search ' ~ kinds_part ~ ' and ' ~ account_part ~ ' and has_key(tags, expiration)' %}
+        {%- for resource in search(resource_search) %}
+            {%- set reported = resource.get("reported", {}) %}
+            {%- set reported_id = reported.get("id") %}
+            {%- set reported_name = reported.get("name") %}
+            {%- set reported_kind = reported.get("kind", {}) %}
+            {%- set resource_expiration = reported.get("tags", {}).get("expiration") %}
+            {%- set resource_expiration_td = parse_duration(resource_expiration) %}
+            {%- set resource_id = resource.get("id") %}
+            {%- if resource_expiration_td is none or resource_expiration_td > account_expiration_td %}
+echo "Updating expiration tag for {{ resource_id }} from {{ resource_expiration }} to {{ account_expiration }}"
+search id({{ resource_id }}) | tag update expiration "{{ account_expiration }}"
+            {%- endif %}
+        {%- endfor %}
+    {%- endfor %}
+{%- endfor %}
