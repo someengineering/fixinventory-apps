@@ -5,7 +5,7 @@ language: jinja2
 license: "Apache 2.0"
 authors: ["someengineering"]
 url: "https://resoto.com/"
-categories: ["tools"]
+categories: ["notification"]
 default_config:
   discord:
     webhook: 'https://discordapp.com/api/webhooks/1234567890/abcdefghijklmnopqrstuvwxyz'

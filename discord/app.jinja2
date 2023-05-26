@@ -17,4 +17,4 @@
 {%- endfor %}
 {%- set message = message | join(" | ") %}
 {%- set discord_data = {"embeds": [{"type": "rich", "title": args.title, "description": message, "footer": {"text": "Message created by Resoto"}}]} %}
-echo '{{ discord_data | tojson | safe }}' | http POST {{ config["webhook"] }} Content-Type:application/json
+json {{ discord_data | tojson }} | http POST {{ config["webhook"] }}
