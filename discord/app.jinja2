@@ -1,0 +1,20 @@
+{%- set config = config["discord"] %}
+{%- set message = [] %}
+{%- for resource in stdin %}
+    {%- set reported = resource.get("reported", {}) %}
+    {%- set ancestors = resource.get("ancestors", {}) %}
+    {%- set account = ancestors.get("account", {}).get("reported", {}).get("name") %}
+    {%- set kind = reported.get("kind") %}
+    {%- set id = reported.get("id") %}
+    {%- set name = reported.get("id") %}
+    {%- if id == name %}
+        {%- set dname = id %}
+    {%- else %}
+        {%- set dname = name ~ ' (' ~ id ~ ')' %}
+    {%- endif %}
+    {%- set kdname = account ~ ' - ' ~ kind ~ ' ' ~ dname %}
+    {%- do message.append(kdname) %}
+{%- endfor %}
+{%- set message = message | join(" | ") %}
+{%- set discord_data = {"embeds": [{"type": "rich", "title": args.title, "description": message, "footer": {"text": "Message created by Resoto"}}]} %}
+echo '{{ discord_data | tojson | safe }}' | http POST {{ config["webhook"] }} Content-Type:application/json

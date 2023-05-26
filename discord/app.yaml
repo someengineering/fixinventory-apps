@@ -1,0 +1,24 @@
+name: discord
+description: "Discord client for Resoto"
+version: "1.0.0"
+language: jinja2
+license: "Apache 2.0"
+authors: ["someengineering"]
+url: "https://resoto.com/"
+categories: ["tools"]
+default_config:
+  discord:
+    webhook: 'https://discordapp.com/api/webhooks/1234567890/abcdefghijklmnopqrstuvwxyz'
+config_schema:
+  - fqn: discord
+    bases: []
+    properties:
+    - name: webhook
+      kind: string
+      required: true
+      description: Discord Webhook URL.
+args_schema:
+  title:
+    help: "Title of the message to send to Discord."
+    type: str
+    required: true

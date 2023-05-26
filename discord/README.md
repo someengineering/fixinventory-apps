@@ -1,0 +1,2 @@
+# discord
+Resoto discord client.
