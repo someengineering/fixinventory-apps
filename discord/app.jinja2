@@ -15,6 +15,6 @@
     {%- set kdname = account ~ ' - ' ~ kind ~ ' ' ~ dname %}
     {%- do message.append(kdname) %}
 {%- endfor %}
-{%- set message = message | join(" | ") %}
+{%- set message = args.message ~ ' ' ~ message | join(" | ") %}
 {%- set discord_data = {"embeds": [{"type": "rich", "title": args.title, "description": message, "footer": {"text": "Message created by Resoto"}}]} %}
 json {{ discord_data | tojson }} | http POST {{ config["webhook"] }}

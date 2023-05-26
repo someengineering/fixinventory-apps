@@ -22,3 +22,7 @@ args_schema:
     help: "Title of the message to send to Discord."
     type: str
     required: true
+  message:
+    help: "Message that comes before the resources."
+    type: str
+    default: "Resoto found the following resources:"
