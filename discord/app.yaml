@@ -26,3 +26,8 @@ args_schema:
     help: "Message that comes before the resources."
     type: str
     default: "Resoto found the following resources:"
+  webhook:
+    help: "Optional Discord Webhook URL."
+    type: str
+    default: null
+    required: false
