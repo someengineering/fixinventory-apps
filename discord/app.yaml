@@ -31,3 +31,13 @@ args_schema:
     type: str
     default: null
     required: false
+  key:
+    help: "Resource field to show as key."
+    type: str
+    default: "kind"
+    required: false
+  value:
+    help: "Resource field to show as value."
+    type: str
+    default: "name"
+    required: false
