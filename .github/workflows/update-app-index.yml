@@ -49,9 +49,6 @@ jobs:
           host_base = ${{ secrets.SPACES_REGION }}.digitaloceanspaces.com
           host_bucket = %(bucket)s.${{ secrets.SPACES_REGION }}.digitaloceanspaces.com
           EOL
-          echo "My home: $HOME - I'm in $(pwd)"
-          ls -al ~/.s3cfg
-          cat ~/.s3cfg
           s3cmd put index.json s3://${{ secrets.SPACES_NAME }}/resoto/apps/
           rm -f ~/.s3cfg
           curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer ${{ secrets.API_TOKEN }}" -d '{"files": ["/resoto/apps/index.json"]}' "https://api.digitalocean.com/v2/cdn/endpoints/${{ secrets.CDN_ENDPOINT_ID }}/cache"
