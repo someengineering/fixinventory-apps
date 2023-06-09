@@ -4,7 +4,7 @@ on:
     tags:
       - "*.*.*"
     branches:
-        - main
+      - main
   pull_request:
     paths:
       - './**'
@@ -43,15 +43,15 @@ jobs:
           umask 0077
           cat > ~/.s3cfg << EOL
           [default]
-          access_key = $SPACES_ACCESS_KEY_ID
-          secret_key = $SPACES_SECRET_ACCESS_KEY
-          bucket_location = $SPACES_REGION
-          host_base = $SPACES_REGION.digitaloceanspaces.com
-          host_bucket = %(bucket)s.$SPACES_REGION.digitaloceanspaces.com
+          access_key = ${{ secrets.SPACES_ACCESS_KEY_ID }}
+          secret_key = ${{ secrets.SPACES_SECRET_ACCESS_KEY }}
+          bucket_location = ${{ secrets.SPACES_REGION }}
+          host_base = ${{ secrets.SPACES_REGION }}.digitaloceanspaces.com
+          host_bucket = %(bucket)s.${{ secrets.SPACES_REGION }}.digitaloceanspaces.com
           EOL
           echo "My home: $HOME - I'm in $(pwd)"
           ls -al ~/.s3cfg
           cat ~/.s3cfg
-          s3cmd put index.json s3://$SPACES_NAME/resoto/apps/
+          s3cmd put index.json s3://${{ secrets.SPACES_NAME }}/resoto/apps/
           rm -f ~/.s3cfg
-          curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer $API_TOKEN" -d '{"files": ["/resoto/apps/index.json"]}' "https://api.digitalocean.com/v2/cdn/endpoints/$CDN_ENDPOINT_ID/cache"
+          curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer ${{ secrets.API_TOKEN }}" -d '{"files": ["/resoto/apps/index.json"]}' "https://api.digitalocean.com/v2/cdn/endpoints/${{ secrets.CDN_ENDPOINT_ID }}/cache"
