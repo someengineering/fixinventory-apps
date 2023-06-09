@@ -38,8 +38,8 @@ jobs:
       - name: Upload the index to the CDN
         if: github.ref_type == 'tag' || github.event_name == 'workflow_dispatch'
         run: |
-          apt-get update
-          apt-get install -y s3cmd
+          sudo apt-get update
+          sudo apt-get install -y s3cmd
 
           cat > ~/.s3cfg << EOL
           [default]
