@@ -49,6 +49,6 @@ jobs:
           host_base = ${{ secrets.SPACES_REGION }}.digitaloceanspaces.com
           host_bucket = %(bucket)s.${{ secrets.SPACES_REGION }}.digitaloceanspaces.com
           EOL
-          s3cmd put index.json s3://${{ secrets.SPACES_NAME }}/resoto/apps/
+          s3cmd put index.json s3://${{ secrets.SPACES_NAME }}/resoto/apps/ --acl-public
           rm -f ~/.s3cfg
           curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer ${{ secrets.API_TOKEN }}" -d '{"files": ["/resoto/apps/index.json"]}' "https://api.digitalocean.com/v2/cdn/endpoints/${{ secrets.CDN_ENDPOINT_ID }}/cache"
