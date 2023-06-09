@@ -1,0 +1,55 @@
+name: Update Resoto Infrastucture Apps Index
+on:
+  push:
+    tags:
+      - "*.*.*"
+    branches:
+        - main
+  pull_request:
+    paths:
+      - './**'
+      - '.github/**'
+  workflow_dispatch:
+
+jobs:
+  resoto-apps:
+    name: "resoto-apps"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+          architecture: 'x64'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install python-dateutil
+          pip install resotoappbundler
+
+      - name: Build the index
+        run: |
+          resotoappbundler --discover --path . > index.json
+
+      - name: Upload the index to the CDN
+        if: github.ref_type == 'tag' || github.event_name == 'workflow_dispatch'
+        run: |
+          apt-get update
+          apt-get install -y s3cmd
+
+          cat > ~/.s3cfg << EOL
+          [default]
+          access_key = $SPACES_ACCESS_KEY_ID
+          secret_key = $SPACES_SECRET_ACCESS_KEY
+          bucket_location = $SPACES_REGION
+          host_base = $SPACES_REGION.digitaloceanspaces.com
+          host_bucket = %(bucket)s.$SPACES_REGION.digitaloceanspaces.com
+          EOL
+          
+          s3cmd put index.json s3://$SPACES_NAME/resoto/apps/
+          rm -f ~/.s3cfg
+          curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer $API_TOKEN" -d '{"files": ["/resoto/apps/index.json"]}' "https://api.digitalocean.com/v2/cdn/endpoints/$CDN_ENDPOINT_ID/cache"
