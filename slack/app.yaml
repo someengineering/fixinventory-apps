@@ -1,4 +1,4 @@
-name: slackapp
+name: slack
 description: "Slack client for Resoto"
 version: "1.0.0"
 language: jinja2
@@ -8,7 +8,7 @@ url: "https://resoto.com/"
 categories: ["notification"]
 default_config:
   discord:
-    webhook: 'https://discordapp.com/api/webhooks/1234567890/abcdefghijklmnopqrstuvwxyz'
+    webhook: 'https://hooks.slack.com/services/T04JZG5SZR3/B03E6JYPWCR/abcdefghijklmnopqrstuvwxyz'
 config_schema:
   - fqn: slack
     bases: []

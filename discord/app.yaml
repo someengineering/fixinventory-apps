@@ -1,4 +1,4 @@
-name: discordapp
+name: discord
 description: "Discord client for Resoto"
 version: "1.0.0"
 language: jinja2
