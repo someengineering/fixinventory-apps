@@ -22,7 +22,7 @@
     {%- do fields.append(field) %}
     {% set resource_count = resource_count + 1 %}
     {%- if loop.index % 25 == 0 or loop.last %}
-        {%- set discord_data = {"embeds": [{"type": "rich", "title": args.title, "description": args.message, "fields": entries, "footer": {"text": "Message created by Resoto"}}]} %}
+        {%- set discord_data = {"embeds": [{"type": "rich", "title": args.title, "description": args.message, "fields": fields, "footer": {"text": "Message created by Resoto"}}]} %}
         json {{ discord_data | tojson }} | http POST {{ webhook }}
         {%- set fields = [] %}
     {%- endif %}
