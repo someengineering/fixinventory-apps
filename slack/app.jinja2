@@ -1,4 +1,4 @@
-{%- set config = config["discord"] %}
+{%- set config = config["slack"] %}
 {%- set ns = namespace(resource_count=0, fields=[]) %}
 {%- if args.webhook is not none  %}
     {%- set webhook = args.webhook %}
@@ -17,16 +17,16 @@
 {%- endif %}
 {%- for resource in stdin %}
     {%- set reported = resource.get("reported", {}) %}
-    {%- set field = {"name": reported.get(key, ""), "value": reported.get(value, "")} %}
+    {%- set field = {"type": "mrkdwn", "text": "*" ~ reported.get(key, "") ~ "*: " ~ reported.get(value, "")} %}
     {%- do ns.fields.append(field) %}
     {% set ns.resource_count = ns.resource_count + 1 %}
-    {%- if loop.index % 25 == 0 or loop.last %}
-        {%- set discord_data = {"embeds": [{"type": "rich", "title": args.title, "description": args.message, "fields": ns.fields, "footer": {"text": "Message created by Resoto"}}]} %}
+    {%- if loop.index % 10 == 0 or loop.last %}
+        {%- set discord_data = { "blocks": [{ "type": "header", "text": { "type": "plain_text", "text": args.title } }, { "type": "section", "text": { "type": "mrkdwn", "text": args.message } }, { "type": "section", "fields": ns.fields }, { "type": "context", "elements": [ { "type": "mrkdwn", "text": "Message created by Resoto" } ] } ] } %}
         json {{ discord_data | tojson }} | http POST {{ webhook }}
         {%- set ns.fields = [] %}
     {%- endif %}
 {%- endfor %}
 {%- if ns.resource_count == 0 %}
-    {%- set discord_data = {"embeds": [{"type": "rich", "title": args.title, "description": args.message, "footer": {"text": "Message created by Resoto"}}]} %}
+    {%- set discord_data = { "blocks": [{ "type": "header", "text": { "type": "plain_text", "text": args.title } }, { "type": "section", "text": { "type": "mrkdwn", "text": args.message } }, { "type": "context", "elements": [ { "type": "mrkdwn", "text": "Message created by Resoto" } ] } ] } %}
     json {{ discord_data | tojson }} | http POST {{ webhook }}
 {%- endif %}

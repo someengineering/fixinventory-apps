@@ -1,0 +1,2 @@
+# slack
+Resoto Slack client.

@@ -1,0 +1,43 @@
+name: slackapp
+description: "Slack client for Resoto"
+version: "1.0.0"
+language: jinja2
+license: "Apache 2.0"
+authors: ["someengineering"]
+url: "https://resoto.com/"
+categories: ["notification"]
+default_config:
+  discord:
+    webhook: 'https://discordapp.com/api/webhooks/1234567890/abcdefghijklmnopqrstuvwxyz'
+config_schema:
+  - fqn: slack
+    bases: []
+    properties:
+    - name: webhook
+      kind: string
+      required: true
+      description: Slack Webhook URL.
+args_schema:
+  title:
+    help: "Title of the message to send to Slack."
+    type: str
+    required: true
+  message:
+    help: "Message that comes before the resources."
+    type: str
+    default: "Resoto found the following resources:"
+  webhook:
+    help: "Optional Slack Webhook URL."
+    type: str
+    default: null
+    required: false
+  key:
+    help: "Resource field to show as key."
+    type: str
+    default: "kind"
+    required: false
+  value:
+    help: "Resource field to show as value."
+    type: str
+    default: "name"
+    required: false
