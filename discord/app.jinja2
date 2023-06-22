@@ -1,4 +1,5 @@
 {%- set config = config["discord"] %}
+{%- set ns = namespace(resource_count=0) %}
 {%- if args.webhook is not none  %}
     {%- set webhook = args.webhook %}
 {%- else %}
@@ -15,19 +16,18 @@
     {%- set value = args.value %}
 {%- endif %}
 {%- set fields = [] %}
-{%- set resource_count = 0 %}
 {%- for resource in stdin %}
     {%- set reported = resource.get("reported", {}) %}
     {%- set field = {"name": reported.get(key, ""), "value": reported.get(value, "")} %}
     {%- do fields.append(field) %}
-    {% set resource_count = resource_count + 1 %}
+    {% set ns.resource_count = ns.resource_count + 1 %}
     {%- if loop.index % 25 == 0 or loop.last %}
         {%- set discord_data = {"embeds": [{"type": "rich", "title": args.title, "description": args.message, "fields": fields, "footer": {"text": "Message created by Resoto"}}]} %}
         json {{ discord_data | tojson }} | http POST {{ webhook }}
         {%- set fields = [] %}
     {%- endif %}
 {%- endfor %}
-{%- if resource_count == 0 %}
+{%- if ns.resource_count == 0 %}
     {%- set discord_data = {"embeds": [{"type": "rich", "title": args.title, "description": args.message, "footer": {"text": "Message created by Resoto"}}]} %}
     json {{ discord_data | tojson }} | http POST {{ webhook }}
 {%- endif %}
