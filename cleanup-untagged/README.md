@@ -1,5 +1,5 @@
-# cleanup-untagged - Resoto Infrastructure App
-Cleanup Untagged App for Resoto
+# cleanup-untagged - Fix Inventory Infrastructure App
+Cleanup Untagged App for Fix Inventory
 
 This app deletes cloud resources that are missing mandatory tags after a certain amount of time has passed since their creation.
 
@@ -8,7 +8,7 @@ This app deletes cloud resources that are missing mandatory tags after a certain
 In `resh` execute
 
 ```
-> config edit resoto.apps.cleanup_untagged
+> config edit fix.apps.cleanup_untagged
 ```
 
 ```

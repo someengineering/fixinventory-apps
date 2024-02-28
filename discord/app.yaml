@@ -1,10 +1,10 @@
 name: discord
-description: "Discord client for Resoto"
+description: "Discord client for Fix Inventory"
 version: "1.0.0"
 language: jinja2
 license: "Apache 2.0"
 authors: ["someengineering"]
-url: "https://resoto.com/"
+url: "https://inventory.fix.security/"
 categories: ["notification"]
 default_config:
   discord:
@@ -25,7 +25,7 @@ args_schema:
   message:
     help: "Message that comes before the resources."
     type: str
-    default: "Resoto found the following resources:"
+    default: "Fix Inventory found the following resources:"
   webhook:
     help: "Optional Discord Webhook URL."
     type: str

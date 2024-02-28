@@ -1,5 +1,5 @@
 # cleanup-aws-vpcs
-AWS VPC Cleanup App for Resoto
+AWS VPC Cleanup App for Fix Inventory
 
 This app marks all VPC dependencies for cleanup. The VPC must have been previously marked for cleanup by another cleanup plugin.
 

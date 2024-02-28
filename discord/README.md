@@ -1,2 +1,2 @@
 # discord
-Resoto discord client.
+Fix Inventory Discord client.

@@ -21,12 +21,12 @@
     {%- do ns.fields.append(field) %}
     {% set ns.resource_count = ns.resource_count + 1 %}
     {%- if loop.index % 25 == 0 or loop.last %}
-        {%- set discord_data = {"embeds": [{"type": "rich", "title": args.title, "description": args.message, "fields": ns.fields, "footer": {"text": "Message created by Resoto"}}]} %}
+        {%- set discord_data = {"embeds": [{"type": "rich", "title": args.title, "description": args.message, "fields": ns.fields, "footer": {"text": "Message created by Fix Inventory"}}]} %}
         json {{ discord_data | tojson }} | http POST {{ webhook }}
         {%- set ns.fields = [] %}
     {%- endif %}
 {%- endfor %}
 {%- if ns.resource_count == 0 %}
-    {%- set discord_data = {"embeds": [{"type": "rich", "title": args.title, "description": args.message, "footer": {"text": "Message created by Resoto"}}]} %}
+    {%- set discord_data = {"embeds": [{"type": "rich", "title": args.title, "description": args.message, "footer": {"text": "Message created by Fix Inventory"}}]} %}
     json {{ discord_data | tojson }} | http POST {{ webhook }}
 {%- endif %}

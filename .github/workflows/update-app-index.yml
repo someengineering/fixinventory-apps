@@ -1,4 +1,4 @@
-name: Update Resoto Infrastucture Apps Index
+name: Update Fix Inventory Infrastucture Apps Index
 on:
   push:
     tags:
@@ -12,8 +12,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  resoto-apps:
-    name: "resoto-apps"
+  fixinventory-apps:
+    name: "fixinventory-apps"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,11 +29,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install python-dateutil
-          pip install resotoappbundler
+          pip install fixinventoryappbundler
 
       - name: Build the index
         run: |
-          resotoappbundler --discover --path . > index.json
+          fixinventoryappbundler --discover --path . > index.json
 
       - name: Upload the index to the CDN
         if: github.ref_type == 'tag' || github.event_name == 'workflow_dispatch'
@@ -49,6 +49,6 @@ jobs:
           host_base = ${{ secrets.SPACES_REGION }}.digitaloceanspaces.com
           host_bucket = %(bucket)s.${{ secrets.SPACES_REGION }}.digitaloceanspaces.com
           EOL
-          s3cmd put index.json s3://${{ secrets.SPACES_NAME }}/resoto/apps/ --acl-public
+          s3cmd put index.json s3://${{ secrets.SPACES_NAME }}/fixinventory/apps/ --acl-public
           rm -f ~/.s3cfg
-          curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer ${{ secrets.API_TOKEN }}" -d '{"files": ["/resoto/apps/index.json"]}' "https://api.digitalocean.com/v2/cdn/endpoints/${{ secrets.CDN_ENDPOINT_ID }}/cache"
+          curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer ${{ secrets.API_TOKEN }}" -d '{"files": ["/fixinventory/apps/index.json"]}' "https://api.digitalocean.com/v2/cdn/endpoints/${{ secrets.CDN_ENDPOINT_ID }}/cache"

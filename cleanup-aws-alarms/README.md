@@ -1,5 +1,5 @@
 # cleanup-aws-alarms
-AWS Cloudwatch Alarms Cleanup Plugin for Resoto
+AWS Cloudwatch Alarms Cleanup Plugin for Fix Inventory
 
 This plugin marks all orphaned AWS CloudWatch Instance Alarms for cleanup.
 

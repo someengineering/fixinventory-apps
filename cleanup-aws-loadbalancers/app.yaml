@@ -4,7 +4,7 @@ version: "1.0.0"
 language: jinja2
 license: "Apache 2.0"
 authors: ["someengineering"]
-url: "https://resoto.com/"
+url: "https://inventory.fix.security/"
 categories: ["cleanup"]
 default_config:
   cleanup_aws_loadbalancers:

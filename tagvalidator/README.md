@@ -1,5 +1,5 @@
 # tagvalidator
-Tag Validator app for Resoto
+Tag Validator app for Fix Inventory
 
 This app validates the contents of expiration tags. With it you can enforce a max. expiration length for certain resources in an account. For instance you could have an org policy that says in our "dev" account compute instances are only allowed to exist for 2 days max. Then this plugin can ensure that the expiration tag on those instances is set to no more than 2 days. If it is set to e.g. 50h it would be corrected down to 48h.
 

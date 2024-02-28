@@ -1,13 +1,13 @@
 # cleanup-expired
-Resoto app for cleanup of expired resources
+Fix Inventory app for cleanup of expired resources
 
-This app looks for resources with the tags `expiration` or `resoto:expires` and flags them for cleanup if they are expired.
+This app looks for resources with the tags `expiration` or `fix:expires` and flags them for cleanup if they are expired.
 
 ## Tag format
 
 | Tag              | Format                      | Description                                          |
 | ---------------- | --------------------------- | ---------------------------------------------------- |
-| `resoto:expires` | `2019-09-05T10:40:11+00:00` | ISO 8601 Timestamp                                   |
+| `fix:expires`    | `2019-09-05T10:40:11+00:00` | ISO 8601 Timestamp                                   |
 | `expiration`     | `24h`                       | A timedelta relative to the resource's creation time |
 
 Example of valid units for the `expiration` tag:

@@ -1,5 +1,5 @@
 # cleanup-aws-loadbalancers
-AWS Loadbalancers Cleanup Resoto App
+AWS Loadbalancers Cleanup Fix Inventory App
 
 This app cleans up AWS ALB/ELB load balancers with no instances attached to them.
 

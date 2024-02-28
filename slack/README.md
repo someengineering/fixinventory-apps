@@ -1,2 +1,2 @@
 # slack
-Resoto Slack client.
+Fix Inventory Slack client.

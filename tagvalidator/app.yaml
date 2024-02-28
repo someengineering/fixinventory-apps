@@ -1,10 +1,10 @@
 name: tagvalidator
-description: "Tag Validator app for Resoto."
+description: "Tag Validator app for Fix Inventory."
 version: "1.0.0"
 language: jinja2
 license: "Apache 2.0"
 authors: ["someengineering"]
-url: "https://resoto.com/"
+url: "https://inventory.fix.security/"
 categories: ["tagging"]
 default_config:
   tagvalidator:

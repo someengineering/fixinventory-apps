@@ -1,5 +1,5 @@
 # cleanup-volumes
-Volume cleanup app for Resoto
+Volume cleanup app for Fix Inventory
 
 This app cleans up unused storage volumes that have reached a certain age threshold.
 
