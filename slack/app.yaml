@@ -7,7 +7,7 @@ authors: ["someengineering"]
 url: "https://inventory.fix.security/"
 categories: ["notification"]
 default_config:
-  discord:
+  slack:
     webhook: 'https://hooks.slack.com/services/T04JZG5SZR3/B03E6JYPWCR/abcdefghijklmnopqrstuvwxyz'
 config_schema:
   - fqn: slack
